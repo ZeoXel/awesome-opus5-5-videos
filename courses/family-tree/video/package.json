@@ -1,0 +1,28 @@
+{
+  "name": "family-tree-video",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "studio": "remotion studio src/index.ts",
+    "timeline": "python3 tools/build_timeline.py",
+    "fonts": "python3 tools/pick_fonts.py",
+    "audio": "python3 tools/build_audio.py",
+    "script": "python3 tools/teacher_script.py",
+    "build": "npm run timeline && npm run fonts && npm run audio && npm run script",
+    "stills": "node tools/stills.mjs --acts",
+    "render": "node tools/render.mjs --acts"
+  },
+  "dependencies": {
+    "@remotion/bundler": "4.0.534",
+    "@remotion/cli": "4.0.534",
+    "@remotion/renderer": "4.0.534",
+    "@types/react": "18.3.12",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "remotion": "4.0.534",
+    "typescript": "5.6.3"
+  },
+  "devDependencies": {
+    "lxgw-wenkai-webfont": "1.7.0"
+  }
+}

@@ -1,25 +1,21 @@
 import React from 'react';
-import {Composition, Sequence} from 'remotion';
-import {Main} from './Main';
-import {TL} from './timeline';
+import {Composition} from 'remotion';
+import {EpisodeView} from './ep/Episode';
+import {Episode} from './ep/types';
+import ep1 from './episodes/ep1.json';
+import ep2 from './episodes/ep2.json';
+import ep3 from './episodes/ep3.json';
 
-const FPS = TL.fps;
+const FPS = 30;
+const EPISODES = [ep1, ep2, ep3] as unknown as Episode[];
 
-/** One act cut out of the full film, so teachers can play a single segment. */
-const ActCut: React.FC<{from: number; withAudio?: boolean}> = ({from, withAudio}) => (
-  <Sequence from={-from}>
-    <Main withAudio={withAudio} />
-  </Sequence>
-);
+const View: React.FC<{n: number; withAudio?: boolean}> = ({n, withAudio}) => <EpisodeView ep={EPISODES[n]} withAudio={withAudio} />;
 
 export const Root: React.FC = () => (
   <>
-    <Composition id="Full" component={Main} durationInFrames={Math.round(TL.duration * FPS)}
-      fps={FPS} width={1920} height={1080} defaultProps={{withAudio: true}} />
-    {TL.acts.map((a) => (
-      <Composition key={a.id} id={a.id} component={ActCut}
-        durationInFrames={Math.round((a.t1 - a.t0) * FPS)} fps={FPS} width={1920} height={1080}
-        defaultProps={{from: Math.round(a.t0 * FPS), withAudio: true}} />
+    {EPISODES.map((ep, n) => (
+      <Composition key={ep.id} id={ep.id} component={View} durationInFrames={Math.round(ep.duration * FPS)}
+        fps={FPS} width={1920} height={1080} defaultProps={{n, withAudio: true}} />
     ))}
   </>
 );

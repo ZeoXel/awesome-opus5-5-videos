@@ -16,7 +16,7 @@ PKG = ROOT / "node_modules" / "lxgw-wenkai-webfont"
 OUT = ROOT / "public" / "fonts"
 
 chars = set()
-for f in list((ROOT / "src").rglob("*.ts*")) + [ROOT / "src" / "timeline.json"]:
+for f in list((ROOT / "src").rglob("*.ts*")) + list((ROOT / "src" / "episodes").glob("*.json")):
     if f.name == "glyphs.json":
         continue
     chars |= {c for c in f.read_text(encoding="utf-8") if ord(c) > 32}

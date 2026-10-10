@@ -12,6 +12,21 @@ type Props = {
   raise?: number;
   /** head tilt in degrees */
   nod?: number;
+  /** football-team jersey drawn over the shirt */
+  jersey?: {color: string; num?: string};
+  /** knitted festival hat colour */
+  hat?: string;
+  /** 0..1 — the "叫错成爷爷" gag: white hair, beard, cane, a stoop */
+  old?: number;
+  /** 0..1 — both arms up (lifting someone, cheering) */
+  armsUp?: number;
+  /** 0..1 — standing on tiptoe */
+  tiptoe?: number;
+  /** mouth moves while this character's speech bubble is up */
+  talk?: boolean;
+  /** props held in the hands, drawn in the hand's local frame */
+  rightHand?: React.ReactNode;
+  leftHand?: React.ReactNode;
 };
 
 const shade = (hex: string, k: number) => {
@@ -22,8 +37,19 @@ const shade = (hex: string, k: number) => {
 };
 
 /** Full-body storybook figure. Origin = between the feet, y grows downward. */
-export const Figure: React.FC<Props> = ({look, t, seed = 0, wave = 0, raise = 0, nod = 0}) => {
+export const Figure: React.FC<Props> = ({look: look0, t, seed = 0, wave = 0, raise = 0, nod = 0,
+  jersey, hat, old = 0, armsUp = 0, tiptoe = 0, talk = false, rightHand, leftHand}) => {
+  const isOld = old > 0.5;
+  const look = {
+    ...look0,
+    shirt: jersey ? jersey.color : look0.shirt,
+    inner: jersey ? undefined : look0.inner,
+    buttons: jersey ? false : look0.buttons,
+    hairColor: isOld ? '#EDEAE4' : look0.hairColor,
+    hair: isOld && look0.kid !== true && look0.hair !== 'grandma' ? ('grandpa' as const) : look0.hair,
+  };
   const {H, kid} = look;
+  const lift = tiptoe * (kid ? 16 : 20);
   const r = kid ? 29 + H * 0.04 : 33;
   const breath = Math.sin((t + seed * 0.37) * Math.PI * 2 / 3.4) * 1.4;
   const top = -H + breath * 0.4;
@@ -48,12 +74,17 @@ export const Figure: React.FC<Props> = ({look, t, seed = 0, wave = 0, raise = 0,
   const baseA = 9;
   const waveA = 140 + Math.sin(t * Math.PI * 2 * 2.2) * 22;
   const raiseA = 166;
-  const rightA = baseA + (waveA - baseA) * wave + (raiseA - baseA) * raise * (1 - wave);
+  let rightA = baseA + (waveA - baseA) * wave + (raiseA - baseA) * raise * (1 - wave);
+  rightA += (160 - rightA) * armsUp;
+  const leftA = baseA + (160 - baseA) * armsUp;
 
   const arm = (side: -1 | 1, angle: number) => (
     <g transform={`translate(${side * (sw - 7)},${shoulderY + 9}) rotate(${-side * angle})`}>
       <rect x={-aw / 2} y={-6} width={aw} height={armL} rx={aw / 2} fill={dark} />
       <circle cx={0} cy={armL - 4} r={aw * 0.55} fill={C.skin} />
+      {(side === -1 ? rightHand : leftHand) && (
+        <g transform={`translate(0,${armL - 4}) rotate(${side * angle})`}>{side === -1 ? rightHand : leftHand}</g>
+      )}
     </g>
   );
 
@@ -177,8 +208,11 @@ export const Figure: React.FC<Props> = ({look, t, seed = 0, wave = 0, raise = 0,
   const legTop = hipY - 6;
   const skirtBottom = hipY + (-8 - hipY) * 0.5;
 
+  const stoop = isOld ? 10 : 0;
   return (
-    <g>
+    <g transform={`translate(0,${-lift})`}>
+      {isOld && <line x1={-(sw + 26)} y1={shoulderY + armL - 4} x2={-(sw + 34)} y2={lift} stroke="#8A5A32" strokeWidth={7} strokeLinecap="round" />}
+      <g transform={`rotate(${stoop} 0 ${hipY})`}>
       {backHair}
       {/* legs + shoes */}
       {[-1, 1].map((s) => (
@@ -194,7 +228,7 @@ export const Figure: React.FC<Props> = ({look, t, seed = 0, wave = 0, raise = 0,
           fill={look.shirt} />
       )}
       {/* left arm (behind torso edge) */}
-      {arm(1, baseA)}
+      {arm(1, leftA)}
       {/* torso */}
       <path
         d={`M ${-sw + 9} ${shoulderY} Q ${-sw} ${shoulderY} ${-sw} ${shoulderY + 14}
@@ -204,6 +238,19 @@ export const Figure: React.FC<Props> = ({look, t, seed = 0, wave = 0, raise = 0,
         stroke={look.shirt === '#F5F1EA' || look.shirt === '#EDE0CC' ? '#D9CBB8' : 'none'}
         strokeWidth={1.5}
       />
+      {jersey && (
+        <g>
+          <path d={`M -14 ${shoulderY} L 0 ${shoulderY + 16} L 14 ${shoulderY}`} stroke="#fff" strokeWidth={5} fill="none" strokeLinejoin="round" />
+          <rect x={-sw + 2} y={shoulderY + 12} width={6} height={torso - 16} fill="#fff" opacity={0.85} />
+          <rect x={sw - 8} y={shoulderY + 12} width={6} height={torso - 16} fill="#fff" opacity={0.85} />
+          {jersey.num ? (
+            <text x={0} y={shoulderY + torso * 0.72} fontSize={torso * 0.55} fontWeight={700} textAnchor="middle" fill="#fff"
+              fontFamily="Arial, sans-serif">{jersey.num}</text>
+          ) : (
+            <path transform={`translate(0,${shoulderY + torso * 0.5}) scale(${torso / 90})`} d="M0,-14 L4,-4 L14,-4 L6,3 L9,13 L0,7 L-9,13 L-6,3 L-14,-4 L-4,-4 Z" fill="#fff" />
+          )}
+        </g>
+      )}
       {look.inner && (
         <path d={`M -11 ${shoulderY} L 11 ${shoulderY} L 5 ${hipY} L -5 ${hipY} Z`} fill={look.inner} />
       )}
@@ -237,7 +284,9 @@ export const Figure: React.FC<Props> = ({look, t, seed = 0, wave = 0, raise = 0,
             <ellipse cx={s * r * 0.56} cy={cy + r * 0.4} rx={r * 0.16} ry={r * 0.1} fill={C.blush} opacity={0.5} />
           </g>
         ))}
-        {kid ? (
+        {talk ? (
+          <ellipse cx={0} cy={cy + r * 0.48} rx={r * 0.17} ry={r * (0.06 + 0.13 * Math.abs(Math.sin(t * 13 + seed)))} fill="#B24A40" />
+        ) : kid ? (
           <path d={`M ${-r * 0.22} ${cy + r * 0.38} Q 0 ${cy + r * 0.72} ${r * 0.22} ${cy + r * 0.38} Z`} fill="#C0564A" />
         ) : (
           <path d={`M ${-r * 0.2} ${cy + r * 0.42} Q 0 ${cy + r * 0.6} ${r * 0.2} ${cy + r * 0.42}`}
@@ -251,8 +300,21 @@ export const Figure: React.FC<Props> = ({look, t, seed = 0, wave = 0, raise = 0,
           </g>
         )}
         {frontHair}
+        {hat && (
+          <g>
+            <path d={`M ${-r * 1.05} ${cy - r * 0.25} C ${-r * 1.1} ${cy - r * 1.55}, ${r * 1.1} ${cy - r * 1.55}, ${r * 1.05} ${cy - r * 0.25} Z`} fill={hat} />
+            <rect x={-r * 1.1} y={cy - r * 0.42} width={r * 2.2} height={r * 0.32} rx={r * 0.16} fill="#F6EFE6" />
+            <circle cx={0} cy={cy - r * 1.32} r={r * 0.24} fill="#F6EFE6" />
+          </g>
+        )}
+        {isOld && (
+          <path d={`M ${-r * 0.75} ${cy + r * 0.3} Q 0 ${cy + r * 0.55} ${r * 0.75} ${cy + r * 0.3}
+                    Q ${r * 0.55} ${cy + r * 1.6} 0 ${cy + r * 1.75} Q ${-r * 0.55} ${cy + r * 1.6} ${-r * 0.75} ${cy + r * 0.3} Z`}
+            fill="#F4F2EE" stroke="#DAD6CE" strokeWidth={1.5} />
+        )}
       </g>
       {overHair}
+      </g>
     </g>
   );
 };

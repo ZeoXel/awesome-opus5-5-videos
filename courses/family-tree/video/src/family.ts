@@ -39,12 +39,13 @@ export const PEOPLE: Record<string, Person> = {
     look: {hair: 'boy', hairColor: '#3A2B22', shirt: '#6189B8', inner: '#7FA3CC', pants: '#4A4A50', H: 298}},
   gugu: {name: '姑姑', py: 'gū gu', sub: '爸爸的姐妹',
     look: {hair: 'bob', hairColor: '#4A3426', shirt: '#B59AC8', inner: '#F4EFF6', pants: '#5B5266', H: 284}},
-  me: {name: '我', py: 'wǒ', sub: '同一个我',
-    look: kid({hair: 'boy', hairColor: '#2B211C', shirt: '#E8743B', pants: '#6B7F5B', H: 205})},
+  // 豆豆 = "我". Red, so he never looks like he's wearing the orange 堂 jersey.
+  me: {name: '我', py: 'wǒ', sub: '豆豆',
+    look: kid({hair: 'boy', hairColor: '#2B211C', shirt: '#D64541', pants: '#4E5D7A', H: 205})},
   tangge: {name: '堂哥', py: 'táng gē', sub: '比我大',
-    look: kid({hair: 'boy', hairColor: '#2B211C', shirt: '#4E7DB5', pants: '#C9B79A', H: 240})},
+    look: kid({hair: 'boy', hairColor: '#2B211C', shirt: '#EE8A2E', pants: '#4E5D7A', H: 240})},
   biaomei: {name: '表妹', py: 'biǎo mèi', sub: '比我小',
-    look: kid({hair: 'pigtails', hairColor: '#4A3020', shirt: '#F2C94C', pants: '#F2C94C', H: 170, dress: true})},
+    look: kid({hair: 'pigtails', hairColor: '#4A3020', shirt: '#3FA3A6', pants: '#3FA3A6', H: 170, dress: true})},
   tangjie: {name: '堂姐', py: 'táng jiě', sub: '比我大',
     look: kid({hair: 'long', hairColor: '#3E2A1E', shirt: '#D36E70', pants: '#D36E70', H: 238, dress: true})},
   waigong: {name: '外公', py: 'wài gōng', sub: '妈妈的爸爸',
@@ -58,11 +59,11 @@ export const PEOPLE: Record<string, Person> = {
   yima: {name: '姨妈', py: 'yí mā', sub: '妈妈的姐妹',
     look: {hair: 'braid', hairColor: '#3A2A22', shirt: '#DE7E66', inner: '#F0A890', pants: '#5B4C48', H: 284}},
   biaojie: {name: '表姐', py: 'biǎo jiě', sub: '比我大',
-    look: kid({hair: 'ponytail', hairColor: '#4A3020', shirt: '#A992C9', pants: '#6E6A8A', H: 236})},
+    look: kid({hair: 'ponytail', hairColor: '#4A3020', shirt: '#3FA3A6', pants: '#6E6A8A', H: 236})},
   jiudi: {name: '表弟', py: 'biǎo dì', sub: '比我小',
     look: kid({hair: 'boy', hairColor: '#33251C', shirt: '#78A86A', pants: '#6B6255', H: 176})},
   biaodi: {name: '表弟', py: 'biǎo dì', sub: '比我小',
-    look: kid({hair: 'boy', hairColor: '#3A2A20', shirt: '#F5F1EA', pants: '#6F8FB8', H: 178, overalls: '#6F8FB8'})},
+    look: kid({hair: 'boy', hairColor: '#3A2A20', shirt: '#F5F1EA', pants: '#3FA3A6', H: 178, overalls: '#3FA3A6'})},
 };
 
 export const prefixTone = (name: string) =>

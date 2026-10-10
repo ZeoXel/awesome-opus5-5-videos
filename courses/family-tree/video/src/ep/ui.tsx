@@ -42,6 +42,7 @@ export const Bubbles: React.FC<{ep: Episode; t: number}> = ({ep, t}) => (
         const hd = headTop(ep, b.who, t);
         if (!hd) return null;
         ax = hd.x; ay = hd.y - 18;
+        if (ep.fx.some((f) => f.kind === 'nameplate' && f.at === b.who && t >= f.t0 && t <= f.t1)) ay -= 82;
       }
       const cx = Math.max(w / 2 + 24, Math.min(1920 - w / 2 - 24, ax));
       const top = Math.max(20, ay - h - 26);

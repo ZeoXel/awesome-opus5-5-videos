@@ -300,6 +300,19 @@ export const Figure: React.FC<Props> = ({look: look0, t, seed = 0, wave = 0, rai
           </g>
         )}
         {frontHair}
+        {look.mustache && !isOld && (
+          <path d={`M 0 ${cy + r * 0.3} C ${-r * 0.15} ${cy + r * 0.2}, ${-r * 0.5} ${cy + r * 0.22}, ${-r * 0.55} ${cy + r * 0.42}
+                    C ${-r * 0.35} ${cy + r * 0.36}, ${-r * 0.12} ${cy + r * 0.42}, 0 ${cy + r * 0.36}
+                    C ${r * 0.12} ${cy + r * 0.42}, ${r * 0.35} ${cy + r * 0.36}, ${r * 0.55} ${cy + r * 0.42}
+                    C ${r * 0.5} ${cy + r * 0.22}, ${r * 0.15} ${cy + r * 0.2}, 0 ${cy + r * 0.3} Z`} fill={hairDark} />
+        )}
+        {look.cap && !isOld && (
+          <g>
+            <path d={`M ${-r * 1.04} ${cy - r * 0.2} C ${-r * 1.08} ${cy - r * 1.42}, ${r * 1.08} ${cy - r * 1.42}, ${r * 1.04} ${cy - r * 0.2} Z`} fill={look.cap} />
+            <path d={`M ${r * 0.55} ${cy - r * 0.45} Q ${r * 1.5} ${cy - r * 0.5} ${r * 1.55} ${cy - r * 0.2} L ${r * 0.9} ${cy - r * 0.2} Z`} fill={shade(look.cap, 0.75)} />
+            <circle cx={0} cy={cy - r * 1.04} r={r * 0.1} fill={shade(look.cap, 0.75)} />
+          </g>
+        )}
         {hat && (
           <g>
             <path d={`M ${-r * 1.05} ${cy - r * 0.25} C ${-r * 1.1} ${cy - r * 1.55}, ${r * 1.1} ${cy - r * 1.55}, ${r * 1.05} ${cy - r * 0.25} Z`} fill={hat} />

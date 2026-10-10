@@ -96,6 +96,36 @@ class Ep:
     def sfx(self, t, name, gain=1.0):
         self.d["sfx"].append({"t": round(t, 3), "name": name, "gain": gain})
 
+    def shift(self, after, dt):
+        """Pushes every time point at or after `after` later by dt seconds
+        (makes room for a new beat without retyping the rest of the episode)."""
+        T = {"t", "t0", "t1", "merge", "label", "cross", "lit", "full", "reveal"}
+        sh = lambda v: v + dt if v >= after else v
+
+        def walk(o):
+            if isinstance(o, dict):
+                for k, v in o.items():
+                    if k in T and isinstance(v, (int, float)):
+                        o[k] = sh(v)
+                    elif k in ("show", "skate_w"):
+                        o[k] = [sh(v[0]), sh(v[1])]
+                    elif k == "keys":
+                        for key in v:
+                            key[0] = sh(key[0])
+                    elif k in ("poses", "skate"):
+                        for w in v:
+                            w[0], w[1] = sh(w[0]), sh(w[1])
+                    elif k == "costume":
+                        for c in v:
+                            c[0] = sh(c[0])
+                    else:
+                        walk(v)
+            elif isinstance(o, list):
+                for x in o:
+                    walk(x)
+        walk({k: v for k, v in self.d.items() if k != "duration"})
+        self.d["duration"] += dt
+
     def save(self):
         for k in ("bubbles", "captions", "sfx"):
             self.d[k].sort(key=lambda e: e.get("t0", e.get("t")))
@@ -184,15 +214,15 @@ e.move("shushu", 43.6, 1220)
 e.d["actors"][-1]["skate"].append([41.2, 44.4])
 e.sfx(41.3, "skate")
 e.pose("shushu", 43.6, 44.3, "jump")
-e.fx("banner", 41.8, 52, text="兄弟足球队")
+e.fx("banner", 41.8, 52.3, text="兄弟足球队")  # → 55.3 after the shift below
 e.sfx(41.9, "cheer", 0.8)
-e.cap(42, 47, "爸爸和他的兄弟们，组成了兄弟足球队！")
-e.fx("rankArrow", 47, 52.2, xs=[700, 960, 1220])
-for k in range(3):
-    e.sfx(47.4 + k * 0.9, "ding", 0.6)
-e.cap(47, 52.2, "1 号最大，3 号最小。")
+# name plates over the three brothers: 爸爸 is known from the start, the other
+# two show "？" until 豆豆 names them correctly (times before the shift)
+e.fx("nameplate", 42.0, 88.0, at="baba", num="2", name="爸爸")
+e.fx("nameplate", 42.0, 88.0, at="bobo", num="1", name="伯伯", reveal=56.0)
+e.fx("nameplate", 42.0, 88.0, at="shushu", num="3", name="叔叔", reveal=71.2)
 
-e.fx("spot", 52.3, 60.4, x=700)
+e.fx("spot", 52.3, 60.4, x=700)  # (shifted +3 s below)
 e.say("bobo", 52.4, 54.6, "哈哈哈！")
 e.pose("bobo", 52.4, 54.6, "laugh")
 e.say("dd3", 54.8, 59.8, "比爸爸大的 1 号，\n叫伯伯！伯伯好！")
@@ -230,7 +260,7 @@ e.say("dd3", 84.6, 87.8, "那你是姑姑！\n姑姑好！")
 e.chip("gugu", 85.4, 88.0, 500)
 e.sticker(87.6, "gugu", "gugu")
 
-# 院子：堂哥
+# 院子：堂哥 (times before the shift)
 e.shot(88, 103, "yard", music="festive")
 e.actor("dd4", "me", 88, 103, 380, hat=ME_HAT)
 e.actor("shushu2", "shushu", 88, 103, 1500, flip=True)
@@ -293,6 +323,18 @@ e.shot(153, 170, "album", music="calm", pages="L", full=153.4)
 e.sfx(153.4, "fanfare")
 e.cap(156.0, 161, "豆豆：爸爸这边，贴满啦！")
 e.cap(161.5, 169, "下一集：去外婆家拜年！")
+# make room for "我是爸爸，2 号！": everything from the 伯伯 beat on moves 3 s later
+e.shift(52.3, 3.0)
+# the new beat: 爸爸 introduces himself, and the other two are measured against him
+e.say("baba", 44.6, 47.4, "豆豆！\n我是爸爸，2 号！")
+e.pose("baba", 44.6, 47.4, "wave")
+e.say("dd3", 47.6, 49.4, "爸爸！")
+e.pose("dd3", 47.6, 48.4, "jump")
+e.fx("rankArrow", 49.6, 55.2, xs=[700, 960, 1220])
+for tt in (50.2, 52.6, 53.8):
+    e.sfx(tt, "ding", 0.6)
+e.cap(49.6, 52.4, "中间的 2 号，是爸爸。")
+e.cap(52.4, 55.2, "1 号比爸爸大，3 号比爸爸小。")
 e.save()
 
 # =========================================================== 第 2 集 ===

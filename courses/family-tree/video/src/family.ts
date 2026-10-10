@@ -14,6 +14,10 @@ export type Look = {
   dress?: boolean;
   overalls?: string;
   buttons?: boolean;
+  /** 伯伯's moustache — tells the three brothers apart in identical jerseys */
+  mustache?: boolean;
+  /** 叔叔's backwards baseball cap */
+  cap?: string;
 };
 
 export type Person = {
@@ -32,11 +36,11 @@ export const PEOPLE: Record<string, Person> = {
   nainai: {name: '奶奶', py: 'nǎi nai', sub: '爸爸的妈妈',
     look: {hair: 'grandma', hairColor: '#CFCAC4', shirt: '#E28B80', inner: '#F6EFE6', pants: '#6A5A55', H: 292}},
   bobo: {name: '伯伯', py: 'bó bo', sub: '爸爸的哥哥',
-    look: {hair: 'side', hairColor: '#3B2A22', shirt: '#8B5A3C', inner: '#E9DFD2', pants: '#4D4440', H: 304}},
+    look: {hair: 'side', hairColor: '#3B2A22', shirt: '#8B5A3C', inner: '#E9DFD2', pants: '#4D4440', H: 316, mustache: true}},
   baba: {name: '爸爸', py: 'bà ba', sub: '我的爸爸',
     look: {hair: 'short', hairColor: '#2E2420', shirt: '#5E8A5A', pants: '#4A4A50', H: 300}},
   shushu: {name: '叔叔', py: 'shū shu', sub: '爸爸的弟弟',
-    look: {hair: 'boy', hairColor: '#3A2B22', shirt: '#6189B8', inner: '#7FA3CC', pants: '#4A4A50', H: 298}},
+    look: {hair: 'boy', hairColor: '#3A2B22', shirt: '#6189B8', inner: '#7FA3CC', pants: '#4A4A50', H: 298, cap: '#3C6FB0'}},
   gugu: {name: '姑姑', py: 'gū gu', sub: '爸爸的姐妹',
     look: {hair: 'bob', hairColor: '#4A3426', shirt: '#B59AC8', inner: '#F4EFF6', pants: '#5B5266', H: 284}},
   // 豆豆 = "我". Red, so he never looks like he's wearing the orange 堂 jersey.

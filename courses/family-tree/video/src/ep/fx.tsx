@@ -88,22 +88,44 @@ export const Fx: React.FC<{ep: Episode; f: F; t: number}> = ({ep, f, t}) => {
       );
     }
     case 'rankArrow': {
+      // 伯伯 and 叔叔 are introduced relative to 爸爸 in the middle
       const xs: number[] = f.xs;
+      const tags: [number, string, boolean, number][] = [[xs[0], '比爸爸大', true, f.t0 + 3.0], [xs[2], '比爸爸小', false, f.t0 + 4.2]];
+      const dad = win(t, f.t0 + 0.3, f.t0 + 2.8, 0.25);
       return (
         <g opacity={a} fontFamily={FONT}>
-          {xs.map((x, i) => {
-            const sc = pop(t, f.t0 + 0.4 + i * 0.9, 1.3);
+          {dad > 0 && (
+            <g opacity={dad}>
+              <path d={`M ${xs[1]} 250 L ${xs[1]} 330 M ${xs[1] - 20} 306 L ${xs[1]} 330 L ${xs[1] + 20} 306`} stroke="#D64541" strokeWidth={10} fill="none" strokeLinecap="round" strokeLinejoin="round"
+                transform={`translate(0,${Math.sin(t * 8) * 8})`} />
+            </g>
+          )}
+          {tags.map(([x, text, up, t0]) => {
+            const sc = pop(t, t0, 1.3);
+            if (sc <= 0) return null;
             return (
-              <g key={i} transform={`translate(${x},300) scale(${sc})`}>
-                <circle r={54} fill="#FFFFFF" stroke={ORANGE} strokeWidth={8} />
-                <text y={24} fontSize={68} fontWeight={700} textAnchor="middle" fill={ORANGE} fontFamily="Arial, sans-serif">{i + 1}</text>
+              <g key={text} transform={`translate(${x},290) scale(${sc})`}>
+                <rect x={-120} y={-34} width={240} height={68} rx={34} fill={up ? '#FCE6CF' : '#DDEFF1'} />
+                <text y={14} fontSize={40} fontWeight={700} textAnchor="middle" fill={up ? '#A85B17' : '#1E6F7A'}>{up ? '▲ ' : '▼ '}{text}</text>
               </g>
             );
           })}
-          <g opacity={prog(t, f.t0 + 2.6, 0.5)}>
-            <text x={xs[0]} y={210} fontSize={46} fontWeight={700} textAnchor="middle" fill="#A85B17">最大</text>
-            <text x={xs[2]} y={210} fontSize={46} fontWeight={700} textAnchor="middle" fill="#1E6F7A">最小</text>
-          </g>
+        </g>
+      );
+    }
+    case 'nameplate': {
+      const p = headTop(ep, f.at, t);
+      if (!p) return null;
+      const known = f.reveal == null || t >= f.reveal + 0.25;
+      const flip = f.reveal != null ? Math.abs(Math.cos(Math.PI * prog(t, f.reveal, 0.5))) : 1;
+      const sc = pop(t, f.t0, 1.2);
+      const isDad = f.name === '爸爸';
+      return (
+        <g opacity={a} transform={`translate(${p.x},${p.y - 44}) scale(${sc * flip},${sc})`} fontFamily={FONT}>
+          <rect x={-104} y={-34} width={208} height={68} rx={34} fill={isDad ? '#D64541' : '#FFFCF6'} stroke={isDad ? '#B5332B' : ORANGE} strokeWidth={4} />
+          <circle cx={-68} cy={0} r={25} fill={ORANGE} stroke="#fff" strokeWidth={3} />
+          <text x={-68} y={11} fontSize={32} fontWeight={700} textAnchor="middle" fill="#fff" fontFamily="Arial, sans-serif">{f.num}</text>
+          <text x={18} y={15} fontSize={42} fontWeight={700} textAnchor="middle" fill={isDad ? '#fff' : known ? C.ink : C.sub}>{known ? f.name : '？'}</text>
         </g>
       );
     }

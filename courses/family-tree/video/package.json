@@ -10,7 +10,12 @@
     "script": "python3 tools/teacher_script.py",
     "build": "npm run episodes && npm run fonts && npm run audio && npm run script",
     "stills": "node tools/stills.mjs ep1 --shots",
-    "render": "node tools/render.mjs"
+    "render": "node tools/render.mjs",
+    "paper:voice": "python3 tools/paper_voice.py",
+    "paper:timeline": "python3 tools/paper_timeline.py",
+    "paper:audio": "python3 tools/paper_audio.py",
+    "paper:stills": "node tools/paper_stills.mjs --beats",
+    "paper:render": "node tools/paper_render.mjs"
   },
   "dependencies": {
     "@remotion/bundler": "4.0.534",

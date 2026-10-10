@@ -1,0 +1,162 @@
+{
+ "hello": {
+  "voice": "C",
+  "text": "过年啦，我来认一认家里人。",
+  "dur": 2.845
+ },
+ "q_yeye": {
+  "voice": "T",
+  "text": "爸爸的爸爸，叫什么？",
+  "dur": 2.039
+ },
+ "a_yeye": {
+  "voice": "C",
+  "text": "爸爸的爸爸，叫爷爷。",
+  "dur": 2.057
+ },
+ "q_nainai": {
+  "voice": "T",
+  "text": "爸爸的妈妈，叫什么？",
+  "dur": 2.079
+ },
+ "a_nainai": {
+  "voice": "C",
+  "text": "爸爸的妈妈，叫奶奶。",
+  "dur": 2.243
+ },
+ "q_bobo": {
+  "voice": "T",
+  "text": "爸爸的哥哥，叫什么？",
+  "dur": 2.111
+ },
+ "a_bobo": {
+  "voice": "C",
+  "text": "爸爸的哥哥，叫伯伯。",
+  "dur": 2.223
+ },
+ "q_shushu": {
+  "voice": "T",
+  "text": "爸爸的弟弟，叫什么？",
+  "dur": 2.035
+ },
+ "a_shushu": {
+  "voice": "C",
+  "text": "爸爸的弟弟，叫叔叔。",
+  "dur": 2.038
+ },
+ "q_gugu": {
+  "voice": "T",
+  "text": "爸爸的姐姐妹妹，叫什么？",
+  "dur": 3.143
+ },
+ "a_gugu": {
+  "voice": "C",
+  "text": "爸爸的姐姐妹妹，叫姑姑。",
+  "dur": 2.402
+ },
+ "q_waigong": {
+  "voice": "T",
+  "text": "妈妈的爸爸，叫什么？",
+  "dur": 1.949
+ },
+ "a_waigong": {
+  "voice": "C",
+  "text": "妈妈的爸爸，叫外公。",
+  "dur": 2.066
+ },
+ "q_waipo": {
+  "voice": "T",
+  "text": "妈妈的妈妈，叫什么？",
+  "dur": 1.983
+ },
+ "a_waipo": {
+  "voice": "C",
+  "text": "妈妈的妈妈，叫外婆。",
+  "dur": 2.193
+ },
+ "q_jiujiu": {
+  "voice": "T",
+  "text": "妈妈的哥哥弟弟，叫什么？",
+  "dur": 3.055
+ },
+ "a_jiujiu": {
+  "voice": "C",
+  "text": "妈妈的哥哥弟弟，叫舅舅。",
+  "dur": 2.816
+ },
+ "q_yima": {
+  "voice": "T",
+  "text": "妈妈的姐姐妹妹，叫什么？",
+  "dur": 2.623
+ },
+ "a_yima": {
+  "voice": "C",
+  "text": "妈妈的姐姐妹妹，叫姨妈。",
+  "dur": 2.597
+ },
+ "k_tangge": {
+  "voice": "C",
+  "text": "叔叔的儿子比我大，我叫他堂哥。",
+  "dur": 3.361
+ },
+ "k_biaomei": {
+  "voice": "C",
+  "text": "姑姑的女儿比我小，我叫她表妹。",
+  "dur": 3.08
+ },
+ "k_biaojie": {
+  "voice": "C",
+  "text": "舅舅的女儿比我大，我叫她表姐。",
+  "dur": 3.098
+ },
+ "k_biaodi": {
+  "voice": "C",
+  "text": "姨妈的儿子比我小，我叫他表弟。",
+  "dur": 3.32
+ },
+ "q_tang": {
+  "voice": "T",
+  "text": "什么时候，叫“堂”呢？",
+  "dur": 2.081
+ },
+ "a_tang": {
+  "voice": "C",
+  "text": "爸爸的兄弟，伯伯、叔叔家的孩子，叫堂。",
+  "dur": 4.304
+ },
+ "q_biao": {
+  "voice": "T",
+  "text": "别人家的孩子呢？",
+  "dur": 2.113
+ },
+ "a_biao": {
+  "voice": "C",
+  "text": "姑姑、舅舅、姨妈家的孩子，都叫表。",
+  "dur": 3.855
+ },
+ "q_order": {
+  "voice": "T",
+  "text": "哥哥姐姐，弟弟妹妹，怎么分？",
+  "dur": 3.006
+ },
+ "a_order": {
+  "voice": "C",
+  "text": "比我大，叫哥哥姐姐；比我小，叫弟弟妹妹。",
+  "dur": 4.385
+ },
+ "same": {
+  "voice": "C",
+  "text": "两边的我，是同一个我。",
+  "dur": 2.244
+ },
+ "bye_c": {
+  "voice": "C",
+  "text": "过年好！",
+  "dur": 0.89
+ },
+ "bye_t": {
+  "voice": "T",
+  "text": "过年好！",
+  "dur": 1.1
+ }
+}

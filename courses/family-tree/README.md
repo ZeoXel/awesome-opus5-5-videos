@@ -4,6 +4,7 @@
 
 | 文件 | 内容 |
 |---|---|
+| [`一张红纸/`](一张红纸/) | **最新版：剪纸风问答视频《一张红纸》（2:10）**：剧本、STYLE.md、风格关键帧 |
 | [`教案.md`](教案.md) | 2 课时教案：故事、课堂游戏、动作口令、儿歌、评价 |
 | [`剧本.md`](剧本.md) | 3 集视频的剧本、角色、笑点设计和准确性约束 |
 | [`教师讲稿.md`](教师讲稿.md) | 三集每句台词的时间码（自动生成），老师可照着配音 |
@@ -41,3 +42,16 @@ npm run studio                # 在 Remotion Studio 里预览、修改
 如果没有自动下载的 Chrome，可以把 `REMOTION_BROWSER` 设为本机 Chrome Headless Shell 的路径。字体是霞鹜文楷（SIL OFL 1.1），只打包片中用到的字。
 
 第一版（家庭关系图讲解版，5:22）保留在 git 历史中。
+
+## 《一张红纸》（剪纸风，最新版）
+
+一个视频讲完：老师问、孩子答（index-tts-v2 克隆的两种音色），剪刀剪出爷爷奶奶，纸娃娃串拉开兄弟姐妹，翻开右半张纸到妈妈这边，金纸剪"堂"家孩子、青纸剪"表"家孩子，和"我"比大小；最后整张纸对折再打开，光沿两边的纸条流到中间的"我"，贴上窗户变成逆光窗花。
+
+```bash
+cd video
+npm run paper:voice      # 生成 / 补全配音（需要 TTS 接口）；台词在 tools/paper_lines.py
+npm run paper:timeline   # 按配音真实时长排时间轴 → src/paper/film.json
+npm run paper:audio      # 配音 + 剪纸音效 + 拨弦配乐 → public/audio/paper/mix.wav
+npm run paper:stills     # 每个节拍一帧的联系表
+npm run paper:render     # → out/一张红纸.mp4（−14 LUFS）
+```

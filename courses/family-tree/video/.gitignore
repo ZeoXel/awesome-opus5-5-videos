@@ -1,4 +1,8 @@
 node_modules/
 out/
-public/audio/
 __pycache__/
+# generated audio; the 《一张红纸》 voice lines are kept (paid, non-deterministic TTS)
+public/audio/*
+!public/audio/paper/
+public/audio/paper/raw/
+public/audio/paper/mix.wav
